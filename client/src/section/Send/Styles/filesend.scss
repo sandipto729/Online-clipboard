@@ -1,0 +1,498 @@
+// sendstyle.scss
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+// Variables
+$primary-color: #6366f1;
+$primary-hover: #4f46e5;
+$primary-light: #e0e7ff;
+$secondary-color: #f8fafc;
+$text-primary: #1e293b;
+$text-secondary: #64748b;
+$text-muted: #94a3b8;
+$border-color: #e2e8f0;
+$success-color: #10b981;
+$error-color: #ef4444;
+$shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+$shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+$shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+$shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+
+// Mixins
+@mixin transition($properties: all, $duration: 0.3s, $timing: ease) {
+  transition: $properties $duration $timing;
+}
+
+@mixin glass-effect {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+@mixin hover-lift {
+  transform: translateY(-2px);
+  box-shadow: $shadow-xl;
+}
+
+// Main container
+.file-send-container {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  max-width: 500px;
+  margin: 2rem auto;
+  padding: 2.5rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 24px;
+  box-shadow: $shadow-xl;
+  position: relative;
+  overflow: hidden;
+
+  // Animated background elements
+  &::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+    background-size: 50px 50px;
+    animation: float 20s linear infinite;
+    pointer-events: none;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 100px;
+    height: 100px;
+    background: linear-gradient(45deg, rgba(255, 255, 255, 0.1), transparent);
+    border-radius: 50%;
+    animation: pulse 3s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  h2 {
+    color: white;
+    font-size: 2rem;
+    font-weight: 700;
+    text-align: center;
+    margin: 0 0 2rem 0;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 1;
+
+    &::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 4px;
+      background: linear-gradient(90deg, rgba(255, 255, 255, 0.8), transparent);
+      margin: 0.5rem auto 0;
+      border-radius: 2px;
+    }
+  }
+}
+
+// Drop zone styling
+.drop-zone {
+  @include glass-effect;
+  border: 2px dashed $border-color;
+  border-radius: 16px;
+  padding: 3rem 2rem;
+  text-align: center;
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
+  @include transition(all, 0.3s, cubic-bezier(0.4, 0, 0.2, 1));
+  margin-bottom: 2rem;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.1), transparent);
+    @include transition(left, 0.5s, ease);
+  }
+
+  &:hover {
+    border-color: $primary-color;
+    background: rgba(255, 255, 255, 1);
+    @include hover-lift;
+
+    &::before {
+      left: 100%;
+    }
+
+    .upload-icon {
+      transform: scale(1.1) rotate(5deg);
+      color: $primary-color;
+    }
+
+    p {
+      color: $primary-color;
+    }
+  }
+
+  &.drag-over {
+    border-color: $primary-color;
+    background: $primary-light;
+    border-style: solid;
+    transform: scale(1.02);
+
+    .upload-icon {
+      animation: bounce 0.6s ease infinite;
+      color: $primary-color;
+    }
+  }
+
+  // Upload icon
+  .upload-icon {
+    font-size: 3rem;
+    color: $text-muted;
+    margin-bottom: 1rem;
+    @include transition(all, 0.3s, cubic-bezier(0.4, 0, 0.2, 1));
+    display: block;
+
+    &::before {
+      content: '📁';
+    }
+  }
+
+  p {
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: $text-primary;
+    margin: 0 0 1rem 0;
+    @include transition(color, 0.3s, ease);
+
+    &.file-selected {
+      color: $success-color;
+      font-weight: 600;
+
+      &::before {
+        content: '✓ ';
+        font-weight: bold;
+      }
+    }
+  }
+
+  span {
+    display: block;
+    font-size: 0.875rem;
+    color: $text-muted;
+    margin: 1.5rem 0;
+    position: relative;
+    font-weight: 400;
+
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 60px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, $border-color, transparent);
+    }
+
+    &::before {
+      left: -80px;
+    }
+
+    &::after {
+      right: -80px;
+    }
+  }
+}
+
+// File input label (Browse button)
+.file-input-label {
+  display: inline-block;
+  padding: 0.75rem 2rem;
+  background: linear-gradient(135deg, $primary-color, $primary-hover);
+  color: white;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  @include transition(all, 0.3s, cubic-bezier(0.4, 0, 0.2, 1));
+  box-shadow: $shadow-sm;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    @include transition(left, 0.5s, ease);
+  }
+
+  &:hover {
+    @include hover-lift;
+    background: linear-gradient(135deg, $primary-hover, #3730a3);
+
+    &::before {
+      left: 100%;
+    }
+  }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: $shadow-sm;
+  }
+}
+
+// Send button
+.send-btn {
+  width: 100%;
+  padding: 1rem 2rem;
+  background: linear-gradient(135deg, $success-color, #059669);
+  color: white;
+  border: none;
+  border-radius: 16px;
+  font-size: 1.125rem;
+  font-weight: 600;
+  cursor: pointer;
+  @include transition(all, 0.3s, cubic-bezier(0.4, 0, 0.2, 1));
+  box-shadow: $shadow-md;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    @include transition(left, 0.5s, ease);
+  }
+
+  &:hover {
+    @include hover-lift;
+    background: linear-gradient(135deg, #059669, #047857);
+
+    &::before {
+      left: 100%;
+    }
+  }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: $shadow-md;
+  }
+
+  &:disabled {
+    background: linear-gradient(135deg, $text-muted, #6b7280);
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: $shadow-sm;
+
+    &:hover {
+      transform: none;
+      box-shadow: $shadow-sm;
+    }
+  }
+
+  // Success state
+  &.success {
+    background: linear-gradient(135deg, $success-color, #059669);
+    
+    &::after {
+      content: '✓';
+      position: absolute;
+      right: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1.2rem;
+    }
+  }
+}
+
+// File info display
+.file-info {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+  padding: 1rem;
+  margin-top: 1rem;
+  border-left: 4px solid $success-color;
+  position: relative;
+  z-index: 1;
+
+  .file-name {
+    font-weight: 600;
+    color: $text-primary;
+    margin-bottom: 0.25rem;
+    word-break: break-all;
+  }
+
+  .file-size {
+    font-size: 0.875rem;
+    color: $text-secondary;
+  }
+
+  .remove-file {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background: none;
+    border: none;
+    color: $text-muted;
+    cursor: pointer;
+    font-size: 1.25rem;
+    @include transition(color, 0.2s, ease);
+
+    &:hover {
+      color: $error-color;
+    }
+  }
+}
+
+// Animations
+@keyframes float {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  33% { transform: translate(30px, -30px) rotate(120deg); }
+  66% { transform: translate(-20px, 20px) rotate(240deg); }
+  100% { transform: translate(0, 0) rotate(360deg); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.1); }
+}
+
+@keyframes bounce {
+  0%, 20%, 53%, 80%, 100% { transform: translate3d(0, 0, 0); }
+  40%, 43% { transform: translate3d(0, -8px, 0); }
+  70% { transform: translate3d(0, -4px, 0); }
+  90% { transform: translate3d(0, -2px, 0); }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .file-send-container {
+    margin: 1rem;
+    padding: 2rem 1.5rem;
+    border-radius: 20px;
+
+    h2 {
+      font-size: 1.75rem;
+    }
+  }
+
+  .drop-zone {
+    padding: 2rem 1rem;
+
+    .upload-icon {
+      font-size: 2.5rem;
+    }
+
+    p {
+      font-size: 1rem;
+    }
+
+    span {
+      &::before,
+      &::after {
+        width: 40px;
+      }
+
+      &::before {
+        left: -60px;
+      }
+
+      &::after {
+        right: -60px;
+      }
+    }
+  }
+
+  .send-btn {
+    font-size: 1rem;
+    padding: 0.875rem 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .file-send-container {
+    margin: 0.5rem;
+    padding: 1.5rem 1rem;
+
+    h2 {
+      font-size: 1.5rem;
+    }
+  }
+
+  .drop-zone {
+    padding: 1.5rem 0.75rem;
+
+    span {
+      &::before,
+      &::after {
+        display: none;
+      }
+    }
+  }
+
+  .file-input-label {
+    padding: 0.625rem 1.5rem;
+    font-size: 0.875rem;
+  }
+}
+
+// Dark mode support (optional)
+@media (prefers-color-scheme: dark) {
+  .file-send-container {
+    background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+  }
+
+  .drop-zone {
+    @include glass-effect;
+    background: rgba(30, 41, 59, 0.95);
+    border-color: #475569;
+
+    &:hover {
+      background: rgba(30, 41, 59, 1);
+      border-color: $primary-color;
+    }
+
+    p {
+      color: #e2e8f0;
+    }
+
+    span {
+      color: #94a3b8;
+    }
+  }
+
+  .file-info {
+    background: rgba(30, 41, 59, 0.9);
+    
+    .file-name {
+      color: #e2e8f0;
+    }
+  }
+}
