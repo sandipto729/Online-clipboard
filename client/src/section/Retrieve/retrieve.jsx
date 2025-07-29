@@ -33,7 +33,7 @@ const Retrieve = () => {
     }
 
     try {
-      const res = await axios.post('http://localhost:8000/api/retrieve', { code: cleanedCode });
+      const res = await axios.post(summaryAPI.receiveFile.url, { code: cleanedCode });
       const json = res.data;
 
       if (res.status === 200 && json.fileType === 'text') {
