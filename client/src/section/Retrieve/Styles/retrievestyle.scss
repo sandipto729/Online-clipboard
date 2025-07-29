@@ -1,0 +1,346 @@
+// Color Variables
+$primary-color: #4f46e5;
+$primary-hover: #4338ca;
+$primary-light: #e0e7ff;
+$success-color: #10b981;
+$success-light: #d1fae5;
+$error-color: #ef4444;
+$error-light: #fee2e2;
+$text-primary: #1f2937;
+$text-secondary: #6b7280;
+$background: #f9fafb;
+$white: #ffffff;
+$border-color: #e5e7eb;
+$shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+$shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+$shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+
+// Animations
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+}
+
+// Main Container
+.retrieve-container {
+  max-width: 500px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: $white;
+  border-radius: 16px;
+  box-shadow: $shadow-lg;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  animation: fadeIn 0.6s ease-out;
+
+  @media (max-width: 640px) {
+    margin: 1rem;
+    padding: 1.5rem;
+    border-radius: 12px;
+  }
+
+  h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: $text-primary;
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    
+    @media (max-width: 640px) {
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+  }
+}
+
+// Form Styles
+.retrieve-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+
+  input[type="text"] {
+    width: 100%;
+    padding: 1rem 1.25rem;
+    border: 2px solid $border-color;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 500;
+    color: $text-primary;
+    background: $white;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+
+    &::placeholder {
+      color: $text-secondary;
+      font-weight: 400;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: $primary-color;
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+      transform: translateY(-1px);
+    }
+
+    &:hover {
+      border-color: darken($border-color, 10%);
+    }
+
+    @media (max-width: 640px) {
+      padding: 0.875rem 1rem;
+      font-size: 0.95rem;
+    }
+  }
+
+  button[type="submit"] {
+    width: 100%;
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, $primary-color 0%, $primary-hover 100%);
+    color: $white;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: $shadow-md;
+      background: linear-gradient(135deg, $primary-hover 0%, darken($primary-hover, 5%) 100%);
+    }
+
+    &:active {
+      transform: translateY(0);
+      box-shadow: $shadow-sm;
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.3);
+    }
+
+    // Loading state
+    &:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    @media (max-width: 640px) {
+      padding: 0.875rem 1.5rem;
+      font-size: 0.95rem;
+    }
+  }
+}
+
+// Error Messages
+.error {
+  background: $error-light;
+  color: $error-color;
+  padding: 1rem 1.25rem;
+  border-radius: 12px;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+  font-size: 0.95rem;
+  animation: slideIn 0.3s ease-out;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  &::before {
+    content: "⚠️";
+    font-size: 1rem;
+  }
+
+  @media (max-width: 640px) {
+    padding: 0.875rem 1rem;
+    font-size: 0.9rem;
+  }
+}
+
+// Result Box
+.result-box {
+  background: $success-light;
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  border-radius: 12px;
+  padding: 1.5rem;
+  animation: fadeIn 0.5s ease-out;
+
+  h3 {
+    color: $success-color;
+    margin: 0 0 1rem 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    &::before {
+      content: "✅";
+      font-size: 1rem;
+    }
+
+    @media (max-width: 640px) {
+      font-size: 1.1rem;
+    }
+  }
+
+  p {
+    margin: 0;
+    color: $text-primary;
+    line-height: 1.6;
+    background: $white;
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid rgba(16, 185, 129, 0.1);
+    word-break: break-word;
+    font-family: 'Courier New', monospace;
+    font-size: 0.95rem;
+
+    @media (max-width: 640px) {
+      padding: 0.875rem;
+      font-size: 0.9rem;
+    }
+  }
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.875rem 1.5rem;
+    background: $success-color;
+    color: $white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+    box-shadow: $shadow-sm;
+
+    &::before {
+      content: "📥";
+      font-size: 1rem;
+    }
+
+    &:hover {
+      background: darken($success-color, 5%);
+      transform: translateY(-1px);
+      box-shadow: $shadow-md;
+    }
+
+    &:active {
+      transform: translateY(0);
+      box-shadow: $shadow-sm;
+    }
+
+    @media (max-width: 640px) {
+      padding: 0.75rem 1.25rem;
+      font-size: 0.9rem;
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  @media (max-width: 640px) {
+    padding: 1.25rem;
+  }
+}
+
+// Responsive Design
+@media (max-width: 480px) {
+  .retrieve-container {
+    margin: 0.5rem;
+    padding: 1.25rem;
+  }
+}
+
+// Loading Animation (optional - can be added to button)
+.loading {
+  &::after {
+    content: "";
+    width: 16px;
+    height: 16px;
+    margin-left: 0.5rem;
+    border: 2px solid transparent;
+    border-top-color: currentColor;
+    border-radius: 50%;
+    display: inline-block;
+    animation: spin 1s linear infinite;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Focus visible for accessibility
+*:focus-visible {
+  outline: 2px solid $primary-color;
+  outline-offset: 2px;
+}
+
+// Dark mode support (optional)
+@media (prefers-color-scheme: dark) {
+  .retrieve-container {
+    background: #1f2937;
+    color: #f9fafb;
+    
+    h2 {
+      color: #f9fafb;
+    }
+    
+    .retrieve-form input[type="text"] {
+      background: #374151;
+      border-color: #4b5563;
+      color: #f9fafb;
+      
+      &::placeholder {
+        color: #9ca3af;
+      }
+      
+      &:focus {
+        border-color: $primary-color;
+        background: #374151;
+      }
+    }
+    
+    .result-box p {
+      background: #374151;
+      color: #f9fafb;
+    }
+  }
+}

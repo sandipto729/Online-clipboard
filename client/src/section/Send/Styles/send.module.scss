@@ -1,0 +1,322 @@
+// send.module.scss
+.sendContainer {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  background: rgba(15, 15, 35, 0.4);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px);
+  overflow: hidden;
+  min-height: 400px;
+}
+
+// Background Elements - Minimal and Performance Optimized
+.backgroundElements {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.floatingCircle {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(79, 70, 229, 0.15), transparent 70%);
+  opacity: 0.6;
+  
+  &.circle1 {
+    width: 120px;
+    height: 120px;
+    top: -60px;
+    right: -60px;
+    background: radial-gradient(circle, rgba(79, 70, 229, 0.1), transparent 70%);
+  }
+  
+  &.circle2 {
+    width: 80px;
+    height: 80px;
+    bottom: -40px;
+    left: -40px;
+    background: radial-gradient(circle, rgba(124, 58, 237, 0.12), transparent 70%);
+  }
+  
+  &.circle3 {
+    width: 60px;
+    height: 60px;
+    top: 50%;
+    right: 20px;
+    background: radial-gradient(circle, rgba(79, 70, 229, 0.08), transparent 70%);
+  }
+}
+
+// Tab Navigation
+.tabNavigation {
+  position: relative;
+  z-index: 10;
+  padding: 32px 24px 24px;
+}
+
+.tabHeader {
+  text-align: center;
+  margin-bottom: 32px;
+
+  h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 8px;
+    background: linear-gradient(135deg, #4f46e5, #7c3aed);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  p {
+    color: #a0a0a0;
+    margin: 0;
+    font-size: 0.95rem;
+  }
+}
+
+// Tab Selector
+.tabSelector {
+  position: relative;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 16px;
+  padding: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  gap: 4px;
+}
+
+.tabBackground {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  width: calc(50% - 6px);
+  height: calc(100% - 16px);
+  background: linear-gradient(135deg, rgba(79, 70, 229, 0.2), rgba(124, 58, 237, 0.15));
+  border-radius: 12px;
+  border: 1px solid rgba(79, 70, 229, 0.3);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(10px);
+  z-index: 1;
+  transform: translateX(0);
+  
+  &.tabBackgroundFile {
+    transform: translateX(calc(100% + 4px));
+  }
+}
+
+.tabButton {
+  position: relative;
+  flex: 1;
+  padding: 20px 16px;
+  background: transparent;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: color 0.2s ease;
+  color: #a0a0a0;
+  text-align: left;
+  z-index: 2;
+  
+  &:hover:not(.tabButtonActive) {
+    color: #d1d5db;
+    background: rgba(255, 255, 255, 0.02);
+  }
+  
+  &.tabButtonActive {
+    color: #ffffff;
+    
+    .tabButton__icon {
+      transform: scale(1.1);
+    }
+    
+    .tabButton__indicator {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+}
+
+.tabButton__icon {
+  font-size: 1.8rem;
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+.tabButton__content {
+  flex: 1;
+  min-width: 0;
+}
+
+.tabButton__label {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 2px;
+  line-height: 1.3;
+}
+
+.tabButton__description {
+  font-size: 0.8rem;
+  opacity: 0.8;
+  line-height: 1.2;
+}
+
+.tabButton__indicator {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  width: 6px;
+  height: 6px;
+  background: #4f46e5;
+  border-radius: 50%;
+  transform: translateY(-50%) scale(0);
+  opacity: 0;
+  transition: all 0.2s ease;
+}
+
+// Content Area
+.contentContainer {
+  position: relative;
+  z-index: 10;
+  padding: 0 24px 32px;
+}
+
+.contentWrapper {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  min-height: 200px;
+  padding: 24px;
+  backdrop-filter: blur(5px);
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .sendContainer {
+    max-width: 100%;
+    border-radius: 16px;
+    min-height: 350px;
+  }
+  
+  .tabNavigation {
+    padding: 24px 16px 20px;
+  }
+  
+  .tabHeader {
+    margin-bottom: 24px;
+
+    h1 {
+      font-size: 1.5rem;
+    }
+
+    p {
+      font-size: 0.9rem;
+    }
+  }
+  
+  .tabButton {
+    padding: 16px 12px;
+    gap: 10px;
+    
+    &__icon {
+      font-size: 1.5rem;
+    }
+    
+    &__label {
+      font-size: 0.9rem;
+    }
+    
+    &__description {
+      font-size: 0.75rem;
+    }
+  }
+  
+  .contentContainer {
+    padding: 0 16px 24px;
+  }
+  
+  .contentWrapper {
+    padding: 20px 16px;
+    min-height: 180px;
+  }
+  
+  .floatingCircle {
+    &.circle1 {
+      width: 80px;
+      height: 80px;
+      top: -40px;
+      right: -40px;
+    }
+    
+    &.circle2 {
+      width: 60px;
+      height: 60px;
+      bottom: -30px;
+      left: -30px;
+    }
+    
+    &.circle3 {
+      display: none; // Hide smallest circle on mobile for better performance
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .tabButton {
+    flex-direction: column;
+    text-align: center;
+    gap: 8px;
+    padding: 14px 8px;
+    
+    &__content {
+      text-align: center;
+    }
+    
+    &__indicator {
+      right: 50%;
+      bottom: 8px;
+      top: auto;
+      transform: translateX(50%) scale(0);
+    }
+    
+    &.tabButtonActive .tabButton__indicator {
+      transform: translateX(50%) scale(1);
+    }
+  }
+}
+
+// Performance Optimizations
+.tabBackground,
+.tabButton__icon,
+.tabButton__indicator {
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+// Reduce motion for accessibility
+@media (prefers-reduced-motion: reduce) {
+  .tabBackground,
+  .tabButton__icon,
+  .tabButton__indicator {
+    transition-duration: 0.01ms !important;
+  }
+  
+  .floatingCircle {
+    display: none;
+  }
+}
+
+// Focus styles for accessibility
+.tabButton:focus-visible {
+  outline: 2px solid #4f46e5;
+  outline-offset: 2px;
+}
