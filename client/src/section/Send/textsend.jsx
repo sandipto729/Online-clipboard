@@ -1,11 +1,35 @@
-import React from 'react'
+import React, { useState } from 'react';
+import './Styles/textsend.scss';
 
-const textsend = () => {
+const TextSend = () => {
+  const [message, setMessage] = useState('');
+
+  const handleSend = () => {
+    if (message.trim()) {
+      alert(`Sending: ${message}`);
+      setMessage('');
+    } else {
+      alert('Please enter a message.');
+    }
+  };
+
   return (
-      <div>
-        <p>This is Text Send page</p>
-      </div>
-  )
-}
+    <div className="text-send-container">
+      <h2>Send a Message</h2>
+      <div className="text-box">
+        <textarea
+          id="message"
+          name="message"
+          placeholder="Type your message here..."
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          rows={6}
+        />
 
-export default textsend
+        <button onClick={handleSend}>Send</button>
+      </div>
+    </div>
+  );
+};
+
+export default TextSend;
