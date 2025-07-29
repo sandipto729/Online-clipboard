@@ -1,0 +1,357 @@
+// Home.module.scss
+.homeContainer {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+  color: #e5e5e5;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  overflow-x: hidden;
+}
+
+// Loading States
+.loadingOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #0f0f23;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #333;
+  border-top: 3px solid #4f46e5;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+// Header Section
+.homeHeader {
+  text-align: center;
+  padding: 60px 20px 40px;
+  background: rgba(15, 15, 35, 0.8);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+  h1 {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 700;
+    margin: 0 0 16px;
+    background: linear-gradient(135deg, #4f46e5, #7c3aed);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .subtitle {
+    font-size: 1.2rem;
+    color: #a0a0a0;
+    margin: 0;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+}
+
+// Main Content
+.homeContent {
+  padding: 40px 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+// Components Container - Side by Side Layout
+.componentsContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  margin-bottom: 80px;
+
+  @media (max-width: 968px) {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+}
+
+.componentWrapper {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 32px;
+  backdrop-filter: blur(10px);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  &.sendWrapper {
+    order: 1;
+  }
+
+  &.retrieveWrapper {
+    order: 2;
+  }
+}
+
+.componentHeader {
+  text-align: center;
+  margin-bottom: 24px;
+
+  .componentIcon {
+    font-size: 3rem;
+    display: block;
+    margin-bottom: 16px;
+  }
+
+  h2 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin: 0 0 8px;
+    color: #ffffff;
+  }
+
+  p {
+    color: #a0a0a0;
+    margin: 0;
+    font-size: 1rem;
+  }
+}
+
+// Feature Grid
+.featureGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  margin-bottom: 60px;
+}
+
+.featureCard {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 32px;
+  text-align: center;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  .icon {
+    font-size: 2.5rem;
+    display: block;
+    margin-bottom: 20px;
+  }
+
+  h3 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin: 0 0 12px;
+    color: #ffffff;
+  }
+
+  p {
+    color: #a0a0a0;
+    margin: 0;
+    line-height: 1.6;
+  }
+}
+
+// Stats Section
+.statsSection {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 30px;
+  margin-bottom: 60px;
+  padding: 40px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.statItem {
+  text-align: center;
+
+  .statNumber {
+    display: block;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #4f46e5;
+    margin-bottom: 8px;
+  }
+
+  .statLabel {
+    color: #a0a0a0;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+}
+
+// System Status
+.statusIndicator {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  z-index: 100;
+
+  &.online {
+    background: rgba(34, 197, 94, 0.2);
+    color: #22c55e;
+    border: 1px solid rgba(34, 197, 94, 0.3);
+  }
+
+  &.offline {
+    background: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+  }
+}
+
+// Floating Action Button
+.fab {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  border: none;
+  border-radius: 50%;
+  color: white;
+  font-size: 1.5rem;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(79, 70, 229, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  z-index: 100;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(79, 70, 229, 0.4);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+// Footer
+.homeFooter {
+  background: rgba(0, 0, 0, 0.3);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 40px 20px;
+  margin-top: 80px;
+}
+
+.footerContent {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+
+  p {
+    margin: 0;
+    color: #a0a0a0;
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+.footerLinks {
+  display: flex;
+  gap: 24px;
+
+  a {
+    color: #a0a0a0;
+    text-decoration: none;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: #4f46e5;
+    }
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .homeHeader {
+    padding: 40px 20px 30px;
+
+    h1 {
+      font-size: 2.5rem;
+    }
+
+    .subtitle {
+      font-size: 1.1rem;
+    }
+  }
+
+  .homeContent {
+    padding: 30px 15px;
+  }
+
+  .componentWrapper {
+    padding: 24px;
+  }
+
+  .featureGrid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .statsSection {
+    padding: 30px 20px;
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .footerContent {
+    padding: 20px 0;
+  }
+}
+
+// Performance optimizations
+* {
+  box-sizing: border-box;
+}
+
+// Reduce motion for users who prefer it
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+// GPU acceleration for smooth animations
+.componentWrapper,
+.featureCard,
+.fab {
+  will-change: transform;
+  transform: translateZ(0);
+}

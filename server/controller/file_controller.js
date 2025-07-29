@@ -22,6 +22,7 @@ export const fileUpload = async (req, res) => {
     return res.status(400).json({ error: 'Missing file or fileType' });
   }
     try {
+      console.log("File is ", file);
       const fileUrl = await uploadToAzureBlob(file.path, file.originalname);
       console.log("fileurl", fileUrl);
       const code = await generateCode();

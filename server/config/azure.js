@@ -11,7 +11,7 @@ async function uploadToAzureBlob(localFilePath, blobName) {
     throw new Error('Azure Storage connection string is not set in environment variables');
   }
   const blobServiceClient = BlobServiceClient.fromConnectionString(AZURE_STORAGE_CONNECTION_STRING);
-  const containerClient = blobServiceClient.getContainerClient(process.env.AZURE_CONTAINER_NAME);
+  const containerClient = blobServiceClient.getContainerClient(process.env.AZURE_STORAGE_CONTAINER_NAME);
   await containerClient.createIfNotExists();
 
   const blockBlobClient = containerClient.getBlockBlobClient(blobName);
