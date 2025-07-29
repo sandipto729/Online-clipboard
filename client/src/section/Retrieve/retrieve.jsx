@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Styles/retrievestyle.scss';
 import axios from 'axios';
+import { summaryAPI } from '../../Common';
 
 const Retrieve = () => {
   const [code, setCode] = useState('');
@@ -11,7 +12,7 @@ const Retrieve = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/api/retrieve');
+        const response = await axios.get(`${summaryAPI.receiveFile.url}`);
         console.log(response.data);
       } catch (error) {
         console.error('Error fetching data:', error);

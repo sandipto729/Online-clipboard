@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useMemo } from 'react';
 import styles from './Styles/textsend.module.scss';
+import { summaryAPI } from '../../Common';
 
 const TextSend = () => {
   const [message, setMessage] = useState('');
@@ -60,8 +61,8 @@ const TextSend = () => {
     setNotification({ text: '', type: '' });
 
     try {
-      const response = await fetch('http://localhost:8000/api/sendfile', {
-        method: 'POST',
+      const response = await fetch(`${summaryAPI.sendFile.url}`, {
+        method: summaryAPI.sendFile.methode,
         headers: {
           'Content-Type': 'application/json'
         },

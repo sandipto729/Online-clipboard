@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styles from './Styles/filesend.module.scss';
+import { summaryAPI } from '../../Common';
 
 export default function FileSend() {
   const [file, setFile] = useState(null);
@@ -105,8 +106,8 @@ export default function FileSend() {
       console.log('Uploading file:', file);
       
       // Upload file to backend
-      const response = await fetch('http://localhost:8000/api/sendfile', {
-        method: 'POST',
+      const response = await fetch(`${summaryAPI.sendFile.url}`, {
+        method: summaryAPI.sendFile.methode,
         body: formData,
       });
 
