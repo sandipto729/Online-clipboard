@@ -1,73 +1,82 @@
-import React, { useState } from 'react'
-import './Styles/retrievestyle.scss'
-import axios from 'axios'
+import React, { useState, useEffect } from 'react';
+import './Styles/retrievestyle.scss';
+import axios from 'axios';
 
 const Retrieve = () => {
-  const [code, setCode] = useState('')
-  const [error, setError] = useState('')
-  const [result, setResult] = useState(null)
+  const [code, setCode] = useState('');
+  const [error, setError] = useState('');
+  const [result, setResult] = useState(null);
+  const [fileType, setFileType] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('http://localhost:8000/api/retrieve');
+        console.log(response.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []); // <-- fixed dependency array
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    const cleanedCode = code.trim()
+    e.preventDefault();
+    const cleanedCode = code.trim();
 
     if (!cleanedCode) {
-      setError('Please enter a retrieve code.')
-      setResult(null)
-      return
+      setError('Please enter a retrieve code.');
+      setResult(null);
+      return;
     }
 
     try {
-      const res = await axios.post('http://localhost:3000/api/retrieve', { code: cleanedCode })
+      const res = await axios.post('http://localhost:8000/api/retrieve', { code: cleanedCode });
+      const json = res.data;
 
-      if (res.data.success) {
-        setError('')
-        setResult(res.data)
+      if (res.status === 200 && json.fileType === 'text') {
+        setError('');
+        setFileType('text');
+        setResult(json.text);
+        setCode('');
+      } else if (json.fileType === 'file') {
+        setFileType('file');
+        setResult(json.fileUrl);
+        setCode('');
       } else {
-        setError(res.data.message || 'Invalid code.')
-        setResult(null)
+        setError(res.data.message || 'Invalid code.');
+        setResult(null);
       }
     } catch (err) {
-      setError('Server error. Please try again later.')
-      setResult(null)
+      setError('Server error. Please try again later.');
+      setResult(null);
     }
-  }
+  };
 
   const renderResult = () => {
-    if (!result) return null
+    if (!result) return null;
 
-    if (result.type === 'text') {
-      return <div className="result-box"><h3>Retrieved Text:</h3><p>{result.data}</p></div>
-    } else if (result.type === 'file') {
-      const blob = b64toBlob(result.data, result.mimetype)
-      const url = URL.createObjectURL(blob)
-
+    if (fileType === 'text') {
+      return (
+        <div className="result-box">
+          <h3>Retrieved Text:</h3>
+          <p>{result}</p>
+        </div>
+      );
+    } else if (fileType === 'file') {
       return (
         <div className="result-box">
           <h3>Retrieved File:</h3>
-          <a href={url} download={result.filename || 'downloaded_file'} target="_blank" rel="noopener noreferrer">
-            Download {result.filename}
+          <a href={result} download>
+            Download File
           </a>
         </div>
-      )
-    }
-    return null
-  }
-
-  // Helper function to convert base64 to Blob
-  const b64toBlob = (b64Data, contentType = '', sliceSize = 512) => {
-    const byteCharacters = atob(b64Data)
-    const byteArrays = []
-
-    for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-      const slice = byteCharacters.slice(offset, offset + sliceSize)
-      const byteNumbers = new Array(slice.length).fill(0).map((_, i) => slice.charCodeAt(i))
-      const byteArray = new Uint8Array(byteNumbers)
-      byteArrays.push(byteArray)
+      );
     }
 
-    return new Blob(byteArrays, { type: contentType })
-  }
+    return null;
+  };
 
   return (
     <div className="retrieve-container">
@@ -85,7 +94,7 @@ const Retrieve = () => {
       {error && <p className="error">{error}</p>}
       {renderResult()}
     </div>
-  )
-}
+  );
+};
 
-export default Retrieve
+export default Retrieve;

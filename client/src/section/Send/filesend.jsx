@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import './Styles/filesend.scss';
-import uploadFile  from '../../helper/azure_blob.js';
-import axios from 'axios';
+
 
 export default function FileSend() {
   const [file, setFile] = useState(null);
@@ -17,6 +16,7 @@ export default function FileSend() {
     e.preventDefault();
   };
 
+
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
     validateAndSetFile(selectedFile);
@@ -31,27 +31,39 @@ export default function FileSend() {
     }
   };
 
-  const handleSend = async () => {
-    if (!file) {
-      alert('Please select a file under 20MB.');
-      return;
+ const handleSend = async () => {
+  if (!file) {
+    alert('Please select a file under 20MB.');
+    return;
+  }
+
+  try {
+    // Prepare multipart form data
+    const formData = new FormData();
+    formData.append('file', file); // backend expects field name 'file'
+    formData.append('fileType', 'file');
+    console.log('Uploading file:', file);
+    // Upload file to backend
+    const response = await fetch('http://localhost:8000/api/upload', {
+      method: 'POST',
+      body: formData,
+    });
+
+    if (!response.ok) {
+      throw new Error('Upload failed');
     }
 
-    try {
-      // Upload file and get URL
-      const fileUrl = await uploadFile('checkfile', file); // use 'uploads' as container
-      const data={
-        fileType: 'file',
-        fileUrl: fileUrl,
-      }
-      console.log(data);
-      alert('✅ File uploaded and sent to backend!');
-      setFile(null);
-    } catch (error) {
-      console.error('❌ Upload failed:', error);
-      alert('Failed to upload file.');
-    }
-  };
+    const result = await response.json(); // result contains { code }
+    console.log('✅ Upload response:', result);
+
+    alert(`✅ File uploaded! Share this code: ${result.code}`);
+    setFile(null);
+  } catch (error) {
+    console.error('❌ Upload failed:', error);
+    alert('Failed to upload file.');
+  }
+};
+
 
   return (
     <div className="file-send-container">

@@ -4,10 +4,41 @@ import './Styles/textsend.scss';
 const TextSend = () => {
   const [message, setMessage] = useState('');
 
-  const handleSend = () => {
+  const handleSend = async() => {
     if (message.trim()) {
-      alert(`Sending: ${message}`);
+      try
+      {
+     
+    
+      const res =await fetch('http://localhost:8000/api/sendfile', {
+        method: 'POST', 
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ "text": message,"fileType": "text" })
+      })
+      console.log(res)
+      const data = await res.json();
+      const code = data.code
+
+     console.log(data);
+      if(code){
+        alert(`Message sent successfully.:-${data.code}`);
+      }
+      else{
+
+        alert('Failed to send message.');
+      }
+   
+    }
+    catch(err){
+      console.log(err);
+      alert('Failed to send message.');
+    }
+    finally{
       setMessage('');
+    }
+      
     } else {
       alert('Please enter a message.');
     }
@@ -22,7 +53,7 @@ const TextSend = () => {
           name="message"
           placeholder="Type your message here..."
           value={message}
-          onChange={(e) => setMessage(e.target.value)}
+          onChange={(e) =>{ console.log(e.target.value);setMessage(e.target.value)}}
           rows={6}
         />
 
