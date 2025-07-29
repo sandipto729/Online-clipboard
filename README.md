@@ -245,4 +245,4 @@ If you encounter any issues or have questions, please:
 
 ---
 
-Made with ❤️ by [Arnab Pachal](https://github.com/Arnab-pachal)
+Made with ❤️ by [Arnab Pachal](https://github.com/Arnab-pachal) & [Sandipto Roy](https://github.com/sandipto729)
