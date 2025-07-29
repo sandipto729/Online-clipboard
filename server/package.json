@@ -9,13 +9,15 @@
   "author": "",
   "license": "ISC",
   "description": "",
-  "type": "commonjs",
+  "type": "module",
   "dependencies": {
+    "@azure/storage-blob": "^12.28.0",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "dotenv": "^17.2.1",
     "express": "^5.1.0",
     "mongoose": "^8.16.5",
+    "multer": "^2.0.2",
     "redis": "^5.6.1"
   }
 }

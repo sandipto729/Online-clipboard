@@ -1,13 +1,14 @@
-const express = require('express');
-const cors = require('cors');
-const dotenv = require('dotenv');
-const Router = require('./Routes/index');
-const cookieParser = require('cookie-parser');
-const path = require('path');
-
+import express from 'express';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import Router from './Routes/index.js';
+import cookieParser from 'cookie-parser';
+import path from 'path';
+import { fileURLToPath } from 'url';
 dotenv.config();
 
 const app = express();
+app.use(express.json());
 
 
 const PORT = process.env.PORT || 8000;
@@ -23,6 +24,8 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Routes
